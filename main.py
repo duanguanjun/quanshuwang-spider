@@ -1,9 +1,11 @@
 # coding:utf-8
+# !/usr/bin/env python
 import requests
 import re
 import os
 from bs4 import BeautifulSoup
-import time
+
+# import time
 
 
 # 通过url获取html内容
@@ -12,7 +14,7 @@ def getHtml(url):
         kv = {'User-Agent': 'Mozilla/5.0'}
         r = requests.get(url, headers=kv, timeout=30)
         r.raise_for_status()
-        r.encoding = 'gbk' #r.apparent_encoding
+        r.encoding = 'gbk'  # r.apparent_encoding
         return r.text
     except:
         print('get html:{} failed'.format(url))
@@ -99,9 +101,9 @@ def getChapterContent(path, url):
                 ch_url = a.get('href')
                 name = a.text
                 if name == "":
-                    title= a.get('title')
+                    title = a.get('title')
                     if title and title != '':
-                        name=title
+                        name = title
                     else:
                         name = re.split(r'/', book_url)[-1:]
                 name = re.sub(r'/', r'-', name)
@@ -109,7 +111,7 @@ def getChapterContent(path, url):
                 if os.path.exists(p1) and os.path.getsize(p1) > 0:
                     print('file:{} is existed!!!'.format(p1))
                     # continue
-                    break #测试发现如果曾经获取过数据，就暂时不获取
+                    break  # 测试发现如果曾经获取过数据，就暂时不获取
                 print(p1)
                 # 获取书的章节内容
                 with open(p1, 'w') as fp:
@@ -117,6 +119,7 @@ def getChapterContent(path, url):
                 getBookContent(p1, ch_url)
                 # debug 测试仅获取第1章内容
                 break
+
 
 # 获取书的章节内容
 def getBookContent(path, url):
@@ -141,7 +144,7 @@ def main():
 
     bs = BeautifulSoup(book_html, 'html.parser')
     title = bs.find_all('ul', class_="channel-nav-list")
-    if title == None or len(title) == 0:
+    if not title:
         return
 
     tag = title[0]
