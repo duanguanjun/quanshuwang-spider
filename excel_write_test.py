@@ -2,7 +2,10 @@
 # -*- coding:utf-8 -*-
 # author:gjduan time:2018/4/21
 import xlwt
-import xlrd
+'''
+参考：https://www.cnblogs.com/MrLJC/p/3715783.html
+'''
+
 
 def writedata(row,sheet,tb):
     sheet.write(row, 0, tb.get('no'))
@@ -13,8 +16,8 @@ def writedata(row,sheet,tb):
 
 '''/Users/duanguanjun/work/t1/exceltest.py'''
 if __name__ == '__main__':
-    tb1 = dict(no="0001", name='zhangsan', age=18, scope=100)
-    tb2 = {'no':"0002", 'name':'wangwu', 'age':20, 'scope':80}
+    tb1 = dict(no="0001", name='张三', age=18, scope=100)
+    tb2 = {'no':"0002", 'name':'王五', 'age':20, 'scope':80}
 
     # print(tb1.keys(),tb1.values())
     # print(tb2)
@@ -22,7 +25,7 @@ if __name__ == '__main__':
     # print(dir(xlwt))
     # print('-'*100)
     # print(dir(xlrd))
-    workbook=xlwt.Workbook(encoding='utf-8')
+    workbook=xlwt.Workbook()
     worksheet=workbook.add_sheet('test')
     row=0
     worksheet.write(row,0,'no')
